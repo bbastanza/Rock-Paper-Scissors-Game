@@ -5,18 +5,30 @@
     <link rel="stylesheet" href="style.css">
     <meta charset="HTF-8">
     <title>Rock*Paper*Scissors</title>
+
 </head>
 
 <body>
     <header>Rock Paper Scissors</header>
     <div class="outer">
         <div class="container">
-            <button class="rock">Rock</button>
-            <button class="paper">Paper</button>
-            <button class="scissors">Scissors</button>
+            <input id="rock" type="image" src="images/rock.png"></input>
+            <input id="paper" type="image" src="images/paper.png"></input>
+            <input id="scissors" type="image" src="images/scissors.png"></input>
 
         </div>
+        <div id="output">
+            <h2 id="userInput">Lets Play Rock Paper Scissors</h2>
+            <h2 id="computerInput"></h2>
+            <h2 id="winner"></h2>
+
+        </div>
+        <div id="icon">
+            <img id="place">
+        </div>
+
     </div>
+    <script src="rps.js"></script>
 </body>
 
 </html>
