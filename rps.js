@@ -1,20 +1,24 @@
 //
 // *************Project #3: Rock Paper Scissors******************
-//
-// Add event listener to see when the page has loaded
-//
 
 
+// sets picks to nothing
 let userInput;
 let compChoice;
+
+// array of things that can be chosen by the computer
 let choice = ["rock", "paper", "scissors"];
+
+// sets vatiable for different HTML Elements
 let userDisplay = document.getElementById("userInput")
 let compDisplay = document.getElementById("computerInput")
 let winDisplay = document.getElementById("winner")
 let iconDisplay = document.getElementById("icon")
 let playAgainDisplay = document.getElementById("playAgain")
+let scoreboard = document.getElementById("scoreboard")
 let iconPlace = document.getElementById("place")
 
+// sets images for win/loss/tie
 let imgLose = document.createElement("img")
 imgLose.src = "images/lose.png"
 
@@ -25,34 +29,40 @@ let imgTie = document.createElement("img")
 imgTie.src = "images/tie.png"
 
 
+// sets score counts at 0
+let userWinCount = 0;
+let computerWinCount = 0;
+let tieCount = 0;
 
 // here are three button event listeners to represent rock paper and scissors buttons(icons)
-document.getElementById("rock").addEventListener("click", rock)
-document.getElementById("paper").addEventListener("click", paper)
-document.getElementById("scissors").addEventListener("click", scissors)
+document.getElementById("rock").addEventListener("click", rock);
+document.getElementById("paper").addEventListener("click", paper);
+document.getElementById("scissors").addEventListener("click", scissors);
 
-
-
-// there will be three functions, one for each choice, that will handle when a button is pressed
-// each of these will display in the DOM what the user has chose
-
+// initializes click variables for timeout functon
+let rockClick;
+let paperClick;
+let scissorClick;
 
 // function for when user input is rock
 function rock() {
     userInput = "rock";
+    rockClick = true;
     userDisplay.innerHTML = "You Choose " + userInput.toUpperCase()
     compChoice = computerChoiceFunction();
     compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-
+    // nope
+    setTimeout(function () {
+        rockClick = false;
+    }, 4000);
+    //
     if (userInput === compChoice) {
-        winDisplay.innerHTML = "It's as Tie";
-        clearDisplayTimer();
+        tie();
     } else if (compChoice === "paper") {
-        winDisplay.innerHTML = "You Lose"
-        clearDisplayTimer();
+        loss();
+
     } else {
-        winDisplay.innerHTML = "You Win!"
-        clearDisplayTimer();
+        win();
     }
 }
 
@@ -62,16 +72,17 @@ function paper() {
     userDisplay.innerHTML = "You Choose " + userInput.toUpperCase()
     compChoice = computerChoiceFunction();
     compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-
+    // nope
+    setTimeout(function () {
+        paperClick = false;
+    }, 4000);
+    //
     if (userInput === compChoice) {
-        winDisplay.innerHTML = "It's as Tie"
-        clearDisplayTimer();
+        tie();
     } else if (compChoice === "scissors") {
-        winDisplay.innerHTML = "You Lose"
-        clearDisplayTimer();
+        loss();
     } else {
-        winDisplay.innerHTML = "You Win!"
-        clearDisplayTimer();
+        win();
     }
 }
 
@@ -82,43 +93,66 @@ function scissors() {
     userDisplay.innerHTML = "You Choose " + userInput.toUpperCase()
     compChoice = computerChoiceFunction();
     compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-
+    // nope
+    setTimeout(function () {
+        scissorClick = false;
+    }, 4000);
+    //
     if (userInput === compChoice) {
-        winDisplay.innerHTML = "It's as Tie"
-        clearDisplayTimer();
+        tie();
 
     } else if (compChoice === "rock") {
-        winDisplay.innerHTML = "You Lose";
-        clearDisplayTimer();
+        loss();
 
     } else {
-        winDisplay.innerHTML = "You Win!"
-        clearDisplayTimer();
-
+        win();
     }
 }
 
+// displays the scoreboard and clears the scoreboard display if nothing else has been pressed
 function clearDisplayTimer() {
-    setTimeout(function () {
+    scoreboard.innerHTML = "Wins: " + userWinCount + " Losses: " + computerWinCount + " Ties: " + tieCount
+    if (rockClick != true && scissorClick != true && paperClick != true) {
         clearDisplay();
-    }, 4000)
+    }
+
 }
 
-
+// changes the scoreboard element to "Lets Play Again"
 function clearDisplay() {
-    userDisplay.innerHTML = "Let's Play Again"
-    compDisplay.innerHTML = ""
-    winDisplay.innerHTML = ""
-
+    scoreboard.innerHTML = "Let's Play Again"
 }
 
-// then they will pass variable to a comuterChoice function
-// this will generate a random answer from the code by using the math function and assigning 1,2,3 to rock paper scissors
+
+// this will generate a random answer from the code by using the math function and 
+// assigning 1,2,3 to rock paper scissors
+// it retuns the choice made by the computer
 function computerChoiceFunction() {
     let compChoice = Math.floor(Math.random() * choice.length)
     let compIcon = choice[compChoice]
     return compIcon;
 }
 
+// win function
+function win() {
+    userWinCount++;
+    winDisplay.innerHTML = "You Win!"
+    clearDisplayTimer();
 
+}
 
+// loss function
+function loss() {
+    computerWinCount++;
+    winDisplay.innerHTML = "You Lose";
+    clearDisplayTimer();
+
+}
+
+// tie function
+function tie() {
+    tieCount++;
+    winDisplay.innerHTML = "It's as Tie"
+    clearDisplayTimer();
+
+}
