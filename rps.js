@@ -1,8 +1,20 @@
 //
 // *************Project #3: Rock Paper Scissors******************
+document.addEventListener('DOMContentLoaded', function () {
+    setInterval(drawObjects, 100)
+});
 
 
-// sets picks to nothing
+let rockY = 0
+let paperY = 10
+let scissorY = 20
+let rockDy = -1
+let paperDy = -1
+let scissorDy = -1
+
+
+
+// initializes picks from user and computer
 let userInput;
 let compChoice;
 
@@ -39,21 +51,20 @@ document.getElementById("rock").addEventListener("click", rock);
 document.getElementById("paper").addEventListener("click", paper);
 document.getElementById("scissors").addEventListener("click", scissors);
 
-// initializes click variables for timeout functon
-let rockClick;
-let paperClick;
-let scissorClick;
+function setScoreHtml() {
+    setTimeout(function () {
+        scoreboard.innerHTML = "Let's Play Again";
+    }, 4000);
+}
 
 // function for when user input is rock
 function rock() {
+    clearDisplayTimer.clearTime();
     userInput = "rock";
-    rockClick = true;
     userDisplay.innerHTML = "You Choose " + userInput.toUpperCase();
     compChoice = computerChoiceFunction();
     compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-    setTimeout(function () {
-        rockClick = false;
-    }, 3500);
+
     if (userInput === compChoice) {
         tie();
     } else if (compChoice === "paper") {
@@ -65,14 +76,12 @@ function rock() {
 
 // function for when user input is paper
 function paper() {
+    clearDisplayTimer.clearTime();
     userInput = "paper";
-    paperClick = true;
-    userDisplay.innerHTML = "You Choose " + userInput.toUpperCase()
+    userDisplay.innerHTML = "You Choose " + userInput.toUpperCase();
     compChoice = computerChoiceFunction();
     compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-    setTimeout(function () {
-        paperClick = false;
-    }, 3500);
+
     if (userInput === compChoice) {
         tie();
     } else if (compChoice === "scissors") {
@@ -85,14 +94,11 @@ function paper() {
 
 // function for when user input is scissors
 function scissors() {
+    clearDisplayTimer.clearTime();
     userInput = "scissors";
-    scissorClick = true;
     userDisplay.innerHTML = "You Choose " + userInput.toUpperCase();
     compChoice = computerChoiceFunction();
     compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-    setTimeout(function () {
-        scissorClick = false;
-    }, 3500);
     if (userInput === compChoice) {
         tie();
 
@@ -104,22 +110,72 @@ function scissors() {
     }
 }
 
+
+
 // displays the scoreboard and clears the scoreboard display if nothing else has been pressed in 4 seconds
-function clearDisplayTimer() {
-    scoreboard.innerHTML = "Wins: " + userWinCount + " Losses: " + computerWinCount + " Ties: " + tieCount;
-    setTimeout(function () {
-        if (rockClick == false && scissorClick == false && paperClick == false) {
+let clearDisplayTimer = {
+    update: function () {
+        scoreboard.innerHTML = "Wins: " + userWinCount + " Losses: " + computerWinCount + " Ties: " + tieCount;
+    },
+    timeOut: function () {
+        setTimeout(function () {
             scoreboard.innerHTML = "Let's Play Again";
-        }
-    }, 4000);
-
-
+        }, 4000);
+    },
+    clearTime: function () {
+        clearTimeout(this.timeOut)
+    }
 }
 
 
 
-// this will generate a random answer from the code by using the math function and 
-// assigning 1,2,3 to rock paper scissors
+// sets variables for all bojects and passes to drawCanvas()
+function drawObjects() {
+
+
+    let rockImage = new Image()
+    let paperImage = new Image()
+    let scissorImage = new Image()
+    rockImage.src = "images/rock.png"
+    paperImage.src = "images/paper.png"
+    scissorImage.src = "images/scissors.png"
+    let rockCanvas = document.getElementById("rock")
+    let paperCanvas = document.getElementById("paper")
+    let scissorCanvas = document.getElementById("scissors")
+    let rockCtx = rockCanvas.getContext('2d')
+    let paperCtx = paperCanvas.getContext('2d')
+    let scissorCtx = scissorCanvas.getContext('2d')
+
+    //sends y axises and movement variable to update function
+    rockY = updateY(rockY, rockDy)
+    paperY = updateY(paperY, paperDy)
+    scissorY = updateY(scissorY, scissorDy)
+
+    drawCanvas(rockCanvas, rockImage, rockCtx, rockY)
+    drawCanvas(paperCanvas, paperImage, paperCtx, paperY)
+    drawCanvas(scissorCanvas, scissorImage, scissorCtx, scissorY)
+}
+
+
+function updateY(y, dy) {
+    if (y - dy < 30 || y + dy > 30) {
+        dy = -dy;
+    }
+    y += dy;
+    return y;
+}
+
+// takes inputs and draws the context on the canvases.
+function drawCanvas(canvas, image, ctx, starty) {
+
+    image.onload = function () {
+        ctx.drawImage(image, 0, starty, canvas.width, (canvas.height - 30))
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+}
+
+// this will generate a random answer from the code by using the math function and assigning 1,2,3 to rock paper scissors
 // it retuns the choice made by the computer
 function computerChoiceFunction() {
     let compChoice = Math.floor(Math.random() * choice.length);
@@ -131,22 +187,23 @@ function computerChoiceFunction() {
 function win() {
     userWinCount++;
     winDisplay.innerHTML = "You Win!";
-    clearDisplayTimer();
-
+    clearDisplayTimer.update();
+    clearDisplayTimer.timeOut();
 }
 
 // loss function
 function loss() {
     computerWinCount++;
     winDisplay.innerHTML = "You Lose";
-    clearDisplayTimer();
-
+    clearDisplayTimer.update();
+    clearDisplayTimer.timeOut();
 }
 
 // tie function
 function tie() {
     tieCount++;
     winDisplay.innerHTML = "It's as Tie";
-    clearDisplayTimer();
-
+    clearDisplayTimer.update();
+    clearDisplayTimer.timeOut();
 }
+

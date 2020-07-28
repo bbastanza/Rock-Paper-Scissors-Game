@@ -23,19 +23,15 @@ header {
 
 }
 
-.container{
+#container{
     text-align: center;
     margin: auto;
-    width: 300px;
+    width: 500px;
     padding: 10px;
     border: 5px solid rgb(87, 51, 11);
     display: flex;
     background-color: rgb(51, 29, 3, .8);
     border-radius: 40px;
-
-
-
-
 }
 
 .container>input {
@@ -44,29 +40,19 @@ header {
 }
 
 #paper{
-
-    font-weight: bold;
-    border-radius: 20px;
-    height: 96px;
-    width: 96px;
-    
+    margin: auto;  
+    cursor: pointer;  
 }
 
 #scissors {
+    margin: auto;
+    cursor: pointer;  
 
-    font-weight: bold;
-    border-radius: 20px;
-    height: 96px;
-    width: 96px;
 }
 
 #rock {
-
-    font-weight: bold;
-    border-radius: 20px;
-    height: 96px;
-    width: 96px;
-
+    margin: auto;
+    cursor: pointer;  
 }
 
 #output {
