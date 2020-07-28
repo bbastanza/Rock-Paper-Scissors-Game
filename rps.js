@@ -1,18 +1,28 @@
 //
 // *************Project #3: Rock Paper Scissors******************
+//
+// calls the drawObjects function every 100 ms
+
+/// UNCOMMENTING LINES 8 THROUGH 12 WILL HAVE THEM MOVE IN UNISON...NOT EXACTLY WHAT I'M LOOKING FOR
 document.addEventListener('DOMContentLoaded', function () {
-    setInterval(drawObjects, 100)
+    setInterval(drawObjects, 100);
+    // setInterval(function () {
+    //     rockDy = -rockDy;
+    //     paperDy = -paperDy;
+    //     scissorDy = -scissorDy;
+    // }, 500)
 });
+//***************************************************************************************** */
 
 
+// sets y axis and movement variables THIS IS WHERE MOVEMENT VARIABLES ARE DEFINED//
 let rockY = 0
 let paperY = 10
 let scissorY = 20
 let rockDy = -1
 let paperDy = -1
 let scissorDy = -1
-
-
+//************************************************************************************************ */
 
 // initializes picks from user and computer
 let userInput;
@@ -131,8 +141,6 @@ let clearDisplayTimer = {
 
 // sets variables for all bojects and passes to drawCanvas()
 function drawObjects() {
-
-
     let rockImage = new Image()
     let paperImage = new Image()
     let scissorImage = new Image()
@@ -145,7 +153,7 @@ function drawObjects() {
     let rockCtx = rockCanvas.getContext('2d')
     let paperCtx = paperCanvas.getContext('2d')
     let scissorCtx = scissorCanvas.getContext('2d')
-
+    //****************************************************************************************************************** */
     //sends y axises and movement variable to update function
     rockY = updateY(rockY, rockDy)
     paperY = updateY(paperY, paperDy)
@@ -156,7 +164,8 @@ function drawObjects() {
     drawCanvas(scissorCanvas, scissorImage, scissorCtx, scissorY)
 }
 
-
+// changes movement to negative movement when it is at a certain amount//
+//THIS IS WHERE I AM HAVING TROUBLE//
 function updateY(y, dy) {
     if (y - dy < 30 || y + dy > 30) {
         dy = -dy;
@@ -174,6 +183,9 @@ function drawCanvas(canvas, image, ctx, starty) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 }
+//********************************************************************************************************************* */
+
+
 
 // this will generate a random answer from the code by using the math function and assigning 1,2,3 to rock paper scissors
 // it retuns the choice made by the computer
