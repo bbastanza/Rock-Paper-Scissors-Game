@@ -5,22 +5,22 @@
 
 /// UNCOMMENTING LINES 8 THROUGH 12 WILL HAVE THEM MOVE IN UNISON...NOT EXACTLY WHAT I'M LOOKING FOR
 document.addEventListener('DOMContentLoaded', function () {
-    setInterval(drawObjects, 100);
-    // setInterval(function () {
-    //     rockDy = -rockDy;
-    //     paperDy = -paperDy;
-    //     scissorDy = -scissorDy;
-    // }, 500)
+    setInterval(drawObjects, 60);
+    setInterval(function () {
+        rockDy = -rockDy;
+        paperDy = -paperDy;
+        scissorDy = -scissorDy;
+    }, 600)
 });
 //***************************************************************************************** */
 
 
 // sets y axis and movement variables THIS IS WHERE MOVEMENT VARIABLES ARE DEFINED//
-let rockY = 0
-let paperY = 10
+let rockY = 20
+let paperY = 20
 let scissorY = 20
 let rockDy = -1
-let paperDy = -1
+let paperDy = 1
 let scissorDy = -1
 //************************************************************************************************ */
 
@@ -39,16 +39,6 @@ let iconDisplay = document.getElementById("icon");
 let playAgainDisplay = document.getElementById("playAgain");
 let scoreboard = document.getElementById("scoreboard");
 let iconPlace = document.getElementById("place");
-
-// sets images for win/loss/tie
-let imgLose = document.createElement("img");
-imgLose.src = "images/lose.png";
-
-let imgWin = document.createElement("img");
-imgWin.src = "images/win.png";
-
-let imgTie = document.createElement("img");
-imgTie.src = "images/tie.png";
 
 
 // sets score counts at 0
@@ -137,6 +127,17 @@ let clearDisplayTimer = {
     }
 }
 
+// sets images for win/loss/tie
+let winIconCanvas = document.getElementById("icon")
+let winIconCtx = winIconCanvas.getContext("2d")
+let imgLose = new Image();
+let imgWin = new Image();
+let imgTie = new Image();
+imgLose.src = "images/lose.png";
+imgWin.src = "images/win.png";
+imgTie.src = "images/tie.png";
+
+
 
 
 // sets variables for all bojects and passes to drawCanvas()
@@ -167,9 +168,6 @@ function drawObjects() {
 // changes movement to negative movement when it is at a certain amount//
 //THIS IS WHERE I AM HAVING TROUBLE//
 function updateY(y, dy) {
-    if (y - dy < 30 || y + dy > 30) {
-        dy = -dy;
-    }
     y += dy;
     return y;
 }
@@ -199,14 +197,19 @@ function computerChoiceFunction() {
 function win() {
     userWinCount++;
     winDisplay.innerHTML = "You Win!";
+    winIconCtx.drawImage(imgWin, 0, 0, 100, 100)
+
     clearDisplayTimer.update();
     clearDisplayTimer.timeOut();
+
 }
 
 // loss function
 function loss() {
     computerWinCount++;
     winDisplay.innerHTML = "You Lose";
+    winIconCtx.drawImage(imgLose, 0, 0, 100, 100)
+
     clearDisplayTimer.update();
     clearDisplayTimer.timeOut();
 }
@@ -215,6 +218,8 @@ function loss() {
 function tie() {
     tieCount++;
     winDisplay.innerHTML = "It's as Tie";
+    winIconCtx.drawImage(imgTie, 0, 0, 100, 100)
+
     clearDisplayTimer.update();
     clearDisplayTimer.timeOut();
 }
