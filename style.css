@@ -1,6 +1,5 @@
 body {
     background-image: url(images/background.jpg);
-    scale: 100%;
     font-family: monospace;
     text-align: center;
 }
@@ -11,7 +10,7 @@ header {
     color: rgb(51, 29, 3);
     border: 5px rgb(51, 29, 3) groove;
     background-image: url(images/background2.jpg);
-    font-size: 40px;
+    font-size: 30px;
     margin: 20px auto;
     border-radius: 60px;
     padding: 20px;
@@ -69,4 +68,8 @@ header {
 
 #scoreboard {
     color: rgb(254, 255, 211);
+}
+
+#icon {
+    margin-top: 10px;
 }
