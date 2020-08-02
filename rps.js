@@ -2,7 +2,7 @@
 // *************Project #3: Rock Paper Scissors******************
 //
 //
-/// starts drawing images on screen every 60ms, every 500ms all y axis propertys are reversed
+/// starts drawing images on screen every 100ms, every 600ms all y axis propertys are reversed
 document.addEventListener('DOMContentLoaded', function () {
     setInterval(drawObjects, 100);
     setInterval(function () {
@@ -21,107 +21,124 @@ let rockDy = -1;
 let paperDy = 1;
 let scissorDy = -1;
 
-
-// initializes picks from user and computer
-let userInput;
-let compChoice;
-
-
-// array of things that can be chosen by the computer
-let choice = ["rock", "paper", "scissors"];
-
-
-// sets vatiable for different HTML Elements
-let userDisplay = document.getElementById("userInput");
-let compDisplay = document.getElementById("computerInput");
-let winDisplay = document.getElementById("winner");
-let iconDisplay = document.getElementById("icon");
-let playAgainDisplay = document.getElementById("playAgain");
-let scoreboard = document.getElementById("scoreboard");
-let iconPlace = document.getElementById("place");
-
-
 // sets score counts at 0
 let userWinCount = 0;
 let computerWinCount = 0;
 let tieCount = 0;
 
 
+// sets vatiable for different HTML Elements
+const userDisplay = document.getElementById("userInput");
+const compDisplay = document.getElementById("computerInput");
+const winDisplay = document.getElementById("winner");
+const iconDisplay = document.getElementById("icon");
+const playAgainDisplay = document.getElementById("playAgain");
+const scoreboard = document.getElementById("scoreboard");
+const iconPlace = document.getElementById("place");
+
+
 // here are three button event listeners to represent rock paper and scissors buttons(icons)
-document.getElementById("rock").addEventListener("click", rock);
-document.getElementById("paper").addEventListener("click", paper);
-document.getElementById("scissors").addEventListener("click", scissors);
+document.getElementById("rock").addEventListener("click", () => {
+    chooseYourWeapon("rock")
+});
+document.getElementById("paper").addEventListener("click", () => {
+    chooseYourWeapon("paper")
+});
+document.getElementById("scissors").addEventListener("click", () => {
+    chooseYourWeapon("scissors")
+});
+
+// function called when each item is clicked to update display and pass to compare function
+function chooseYourWeapon(userChoice) {
+    const userInput = userChoice;
+    const compChoice = computerChoiceFunction();
+    userDisplay.textContent = `You Choose ${userInput.toUpperCase()}`;
+    compDisplay.textContent = `The Computer's Choice is ${compChoice.toUpperCase()}`
+    compareWeapons(userInput, compChoice)
+}
+
+// this compares all user choices to all computer choices
+function compareWeapons(userInput, compChoice) {
+    if (userInput === "paper" && compChoice === "rock") {
+        win();
+    } else if (userInput === "paper" && compChoice === "scissors") {
+        loss();
+    } else if (userInput === "scissors" && compChoice === "paper") {
+        win();
+    } else if (userInput === "scissors" && compChoice === "rock") {
+        loss();
+    } else if (userInput === "rock" && compChoice === "scissors") {
+        win();
+    } else if (userInput === "rock" && compChoice === "paper") {
+        loss();
+    } else {
+        tie();
+    }
+}
 
 
 // this will generate a random answer from the code by using the math function and assigning 1,2,3 to rock paper scissors
 // it retuns the choice made by the computer
 function computerChoiceFunction() {
-    let compChoice = Math.floor(Math.random() * choice.length);
-    let compIcon = choice[compChoice];
+    const choice = ["rock", "paper", "scissors"];
+    const compChoice = Math.floor(Math.random() * choice.length);
+    const compIcon = choice[compChoice];
     return compIcon;
 }
 
+// initializes reset varaibale for id of set timeout in (updateScore function)
+let reset;
 
-// takes user input set by each function and displays user and computer choises on the screen
-function choises(userInput) {
-    userDisplay.innerHTML = "You Choose " + userInput.toUpperCase();
-    compChoice = computerChoiceFunction();
-    compDisplay.innerHTML = "The Computer's Choice is " + compChoice.toUpperCase();
-    return compChoice;
+
+// win function- draws win image on screen
+function win() {
+    clearTimeout(reset);
+    userWinCount++;
+    winDisplay.textContent = "You Win!";
+    iconClear();
+    winIconCtx.drawImage(imgWin, 0, 0, 100, 100);
+    reset = updateScore();
 }
 
 
-// function for when user input is rock
-function rock() {
-    userInput = "rock";
-    compChoice = choises(userInput);
-    if (userInput === compChoice) {
-        tie();
-    } else if (compChoice === "paper") {
-        loss();
-    } else {
-        win();
-    }
-}
-
-// function for when user input is paper
-function paper() {
-    userInput = "paper";
-    compChoice = choises(userInput);
-    if (userInput === compChoice) {
-        tie();
-
-    } else if (compChoice === "scissors") {
-        loss();
-
-    } else {
-        win();
-    }
+// loss function- draws lose image on screen
+function loss() {
+    clearTimeout(reset);
+    computerWinCount++;
+    winDisplay.textContent = "You Lose";
+    iconClear();
+    winIconCtx.drawImage(imgLose, 0, 0, 100, 100);
+    reset = updateScore();
 }
 
 
-// function for when user input is scissors
-function scissors() {
-    userInput = "scissors";
-    compChoice = choises(userInput);
-    if (userInput === compChoice) {
-        tie();
+// tie function- draws tie image on screen
+function tie() {
+    clearTimeout(reset);
+    tieCount++;
+    winDisplay.textContent = "It's as Tie";
+    iconClear();
+    winIconCtx.drawImage(imgTie, 0, 0, 100, 100);
+    reset = updateScore();
+}
 
-    } else if (compChoice === "rock") {
-        loss();
-
-    } else {
-        win();
-    }
+// function to display score board and set timeout to 4 seconds/ returns the id for a clear tiemout when
+// tie, win or loss functions are pressed
+function updateScore() {
+    scoreboard.textContent = `Wins: ${userWinCount} Losses: ${computerWinCount} Ties: ${tieCount}`;
+    let id = setTimeout(function () {
+        scoreboard.textContent = "Let's Play Again";
+    }, 4000);
+    return id;
 }
 
 
 // sets images for win/loss/tie
-let winIconCanvas = document.getElementById("icon");
-let winIconCtx = winIconCanvas.getContext("2d");
-let imgLose = new Image();
-let imgWin = new Image();
-let imgTie = new Image();
+const winIconCanvas = document.getElementById("icon");
+const winIconCtx = winIconCanvas.getContext("2d");
+const imgLose = new Image();
+const imgWin = new Image();
+const imgTie = new Image();
 imgLose.src = "images/lose.png";
 imgWin.src = "images/win.png";
 imgTie.src = "images/tie.png";
@@ -129,18 +146,18 @@ imgTie.src = "images/tie.png";
 
 // sets variables for all bojects and passes to drawCanvas()
 function drawObjects() {
-    let rockImage = new Image();
-    let paperImage = new Image();
-    let scissorImage = new Image();
+    const rockImage = new Image();
+    const paperImage = new Image();
+    const scissorImage = new Image();
     rockImage.src = "images/rock.png";
     paperImage.src = "images/paper.png";
     scissorImage.src = "images/scissors.png";
-    let rockCanvas = document.getElementById("rock");
-    let paperCanvas = document.getElementById("paper");
-    let scissorCanvas = document.getElementById("scissors");
-    let rockCtx = rockCanvas.getContext('2d');
-    let paperCtx = paperCanvas.getContext('2d');
-    let scissorCtx = scissorCanvas.getContext('2d');
+    const rockCanvas = document.getElementById("rock");
+    const paperCanvas = document.getElementById("paper");
+    const scissorCanvas = document.getElementById("scissors");
+    const rockCtx = rockCanvas.getContext('2d');
+    const paperCtx = paperCanvas.getContext('2d');
+    const scissorCtx = scissorCanvas.getContext('2d');
 
     //sends y axises and movement variable to (updateY function)
     rockY = updateY(rockY, rockDy);
@@ -167,54 +184,6 @@ function drawCanvas(canvas, image, ctx, starty) {
         ctx.drawImage(image, 0, starty, canvas.width, (canvas.height - 30));
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-
-// initializes reset varaibale for id of set timeout in (updateScore function)
-let reset;
-
-
-// win function- draws win image on screen
-function win() {
-    clearTimeout(reset);
-    userWinCount++;
-    winDisplay.innerHTML = "You Win!";
-    iconClear();
-    winIconCtx.drawImage(imgWin, 0, 0, 100, 100);
-    reset = updateScore();
-}
-
-
-// loss function- draws lose image on screen
-function loss() {
-    clearTimeout(reset);
-    computerWinCount++;
-    winDisplay.innerHTML = "You Lose";
-    iconClear();
-    winIconCtx.drawImage(imgLose, 0, 0, 100, 100);
-    reset = updateScore();
-}
-
-
-// tie function- draws tie image on screen
-function tie() {
-    clearTimeout(reset);
-    tieCount++;
-    winDisplay.innerHTML = "It's as Tie";
-    iconClear();
-    winIconCtx.drawImage(imgTie, 0, 0, 100, 100);
-    reset = updateScore();
-}
-
-
-// function to display score board and set timeout to 4 seconds/ returns the id for a clear tiemout when
-// tie, win or loss functions are pressed
-function updateScore() {
-    scoreboard.innerHTML = "Wins: " + userWinCount + " Losses: " + computerWinCount + " Ties: " + tieCount;
-    let id = setTimeout(function () {
-        scoreboard.innerHTML = "Let's Play Again";
-    }, 4000);
-    return id;
 }
 
 

@@ -5,7 +5,7 @@
 
 ![js](MDimages/javascript.png) ![html](MDimages/html.png) ![css](MDimages/css.png)
 
-Play [here](https://bbastanza.github.io/rps/)
+Play the game [here](https://bbastanza.github.io/rps/)
 
  ![Screenshot](MDimages/screenshot.png)
 
