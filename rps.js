@@ -28,11 +28,10 @@ let tieCount = 0;
 
 
 // sets vatiable for different HTML Elements
-const userDisplay = document.getElementById("userInput");
-const compDisplay = document.getElementById("computerInput");
+const userDisplay = document.getElementById("user-input");
+const compDisplay = document.getElementById("computer-input");
 const winDisplay = document.getElementById("winner");
 const iconDisplay = document.getElementById("icon");
-const playAgainDisplay = document.getElementById("playAgain");
 const scoreboard = document.getElementById("scoreboard");
 const iconPlace = document.getElementById("place");
 
