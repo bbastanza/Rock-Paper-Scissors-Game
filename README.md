@@ -1,16 +1,15 @@
-  # Rock-Paper-Scissors Game
- >Rock-Paper-Scissors Game written in Javascript, HTML & CSS
+# Rock-Paper-Scissors Game
 
-
+> Rock-Paper-Scissors Game written in Javascript, HTML & CSS
 
 ![js](MDimages/javascript.png) ![html](MDimages/html.png) ![css](MDimages/css.png)
 
 Play the game [here](https://bbastanza.github.io/rps/)
 
- ![Screenshot](MDimages/screenshot.png)
-
+![Screenshot](MDimages/screenshot.png)
 
 ## Summary
+
 I made this game to further my knowledge of JS, HTML and CSS.
 
 Building this app I learned about drawing on canvas, clearing canvases and redrawing them to create the illusion of movement.
@@ -19,7 +18,12 @@ The hardest thing that I was challenged to in this app was to make the images mo
 
 It can also keep score, which then hides after a certain timeout interval. While implimenting this I learned a lot about clearing the timeout whenever a new item is chosen.
 
-
+#
 
 ## Author
-Brian Bastanza- Full Stack Web Developer
+
+### Brian Bastanza- Full Stack Web Developer
+
+[Personal Website](www.brianbastanza.com)
+
+[LinkedIn](www.linkedin.com/in/brian-bastanza-9035397b)
