@@ -4,7 +4,7 @@
 
 ![js](MDimages/javascript.png) ![html](MDimages/html.png) ![css](MDimages/css.png)
 
-Play the game [here](https://bbastanza.github.io/rps/)
+Play the game [here](https://bbastanza.github.io/Rock-Paper-Scissors-Game/)
 
 ![Screenshot](MDimages/screenshot.png)
 
