@@ -24,6 +24,6 @@ It can also keep score, which then hides after a certain timeout interval. While
 
 ### Brian Bastanza- Full Stack Web Developer
 
-[Personal Website](www.brianbastanza.com)
+[Personal Website](www.brianbastanza.me)
 
 [LinkedIn](www.linkedin.com/in/brian-bastanza-9035397b)
