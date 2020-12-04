@@ -27,4 +27,4 @@ It can also keep score, which then hides after a certain timeout interval. While
 
 <a href="https://www.brianbastanza.me/" target="_blank" rel="noopener">Personal Website</a>
 
-[LinkedIn](www.linkedin.com/in/brian-bastanza-9035397b)
+[LinkedIn](https://www.linkedin.com/in/bbastanza)
